@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Trading Bot</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================================================
+         LOGIN / SIGNUP
+    ========================================================== -->
+
+    <div id="authScreen" class="auth-screen">
+
+        <div class="auth-card">
+
+            <div class="auth-logo">₿</div>
+
+            <h1>Crypto Trading Bot</h1>
+            <p class="auth-subtitle">AI Market Intelligence • Demo Trading</p>
+
+            <!-- LOGIN -->
+            <div id="loginBox">
+
+                <h2>Welcome Back</h2>
+                <p class="auth-note">Login to access your trading dashboard</p>
+
+                <form id="loginForm">
+
+                    <label>Email</label>
+                    <input
+                        type="email"
+                        id="loginEmail"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        placeholder="Enter your password"
+                        required
+                    >
+
+                    <button type="submit" class="auth-btn">
+                        Login
+                    </button>
+
+                    <div id="loginMessage" class="auth-message"></div>
+
+                </form>
+
+                <button type="button" id="demoLoginBtn" class="demo-btn">
+                    Enter Demo Account
+                </button>
+
+                <p class="switch-auth">
+                    Don't have an account?
+                    <button type="button" id="showSignupBtn">
+                        Sign Up
+                    </button>
+                </p>
+
+            </div>
+
+
+            <!-- SIGNUP -->
+            <div id="signupBox" class="hidden">
+
+                <h2>Create Account</h2>
+                <p class="auth-note">Create your demo trading account</p>
+
+                <form id="signupForm">
+
+                    <label>Full Name</label>
+                    <input
+                        type="text"
+                        id="signupName"
+                        placeholder="Enter your name"
+                        required
+                    >
+
+                    <label>Email</label>
+                    <input
+                        type="email"
+                        id="signupEmail"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        id="signupPassword"
+                        placeholder="Create password"
+                        required
+                    >
+
+                    <label>Confirm Password</label>
+                    <input
+                        type="password"
+                        id="signupConfirmPassword"
+                        placeholder="Confirm password"
+                        required
+                    >
+
+                    <button type="submit" class="auth-btn">
+                        Create Account
+                    </button>
+
+                    <div id="signupMessage" class="auth-message"></div>
+
+                </form>
+
+                <p class="switch-auth">
+                    Already have an account?
+                    <button type="button" id="showLoginBtn">
+                        Login
+                    </button>
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         MAIN APP
+    ========================================================== -->
+
+    <div id="app" class="app hidden">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+
+                <div class="sidebar-logo">₿</div>
+
+                <div>
+                    <div class="brand-title">Crypto Trading Bot</div>
+                    <div class="brand-subtitle">AI Market Intelligence</div>
+                </div>
+
+            </div>
+
+
+            <nav class="sidebar-nav">
+
+                <button class="nav-btn active" data-target="dashboardSection">
+                    <span>▦</span>
+                    Dashboard
+                </button>
+
+                <button class="nav-btn" data-target="marketsSection">
+                    <span>◈</span>
+                    Markets
+                </button>
+
+                <button class="nav-btn" data-target="portfolioSection">
+                    <span>◫</span>
+                    Portfolio
+                </button>
+
+                <button class="nav-btn" data-target="tradeSection">
+                    <span>⇄</span>
+                    Buy / Sell
+                </button>
+
+                <button class="nav-btn" data-target="activeSection">
+                    <span>●</span>
+                    Active Trades
+                </button>
+
+                <button class="nav-btn" data-target="historySection">
+                    <span>◷</span>
+                    Trade History
+                </button>
+
+                <button class="nav-btn" data-target="aiSection">
+                    <span>✦</span>
+                    AI Analysis
+                </button>
+
+                <button class="nav-btn" data-target="watchlistSection">
+                    <span>☆</span>
+                    Watchlist
+                </button>
+
+                <button class="nav-btn" data-target="notificationsSection">
+                    <span>♢</span>
+                    Notifications
+                </button>
+
+                <button class="nav-btn" data-target="settingsSection">
+                    <span>⚙</span>
+                    Settings
+                </button>
+
+            </nav>
+
+
+            <div class="sidebar-bottom">
+
+                <div class="user-mini">
+
+                    <div class="user-avatar" id="sidebarAvatar">
+                        U
+                    </div>
+
+                    <div class="user-info">
+                        <strong id="sidebarUserName">User</strong>
+                        <span id="sidebarUserEmail">user@email.com</span>
+                    </div>
+
+                </div>
+
+                <button id="logoutBtn" class="logout-btn">
+                    ↪ Logout
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+
+            <!-- TOP HEADER -->
+            <header class="header">
+
+                <div>
+
+                    <h1>Trading Dashboard</h1>
+
+                    <p>
+                        Real-time demo market data, AI analysis and trading signals
+                    </p>
+
+                </div>
+
+
+                <div class="header-right">
+
+                    <div class="header-status">
+
+                        <span class="status-dot"></span>
+
+                        <span id="headerStatus">
+                            Bot Running
+                        </span>
+
+                    </div>
+
+
+                    <div class="header-user">
+
+                        <span class="header-avatar" id="headerAvatar">
+                            U
+                        </span>
+
+                        <span id="headerUserName">
+                            User
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- =====================================================
+                 DASHBOARD
+            ====================================================== -->
+
+            <section id="dashboardSection" class="page-section">
+
+                <!-- TOP STATS -->
+                <section class="top-stats">
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon green">
+                            ↗
+                        </div>
+
+                        <div>
+                            <span class="stat-label">Market Price</span>
+                            <h2 id="marketPrice">$60,017.65</h2>
+                            <span class="stat-change">+0.42% (24h)</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon purple">
+                            ◉
+                        </div>
+
+                        <div>
+                            <span class="stat-label">Trading Signal</span>
+                            <h2 id="topSignal" class="signal hold">HOLD</h2>
+                            <span class="stat-small">AI Recommendation</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon red">
+                            $
+                        </div>
+
+                        <div>
+                            <span class="stat-label">Profit / Loss</span>
+                            <h2 id="topProfitLoss" class="loss">-$12.89</h2>
+                            <span class="stat-small">Current P/L</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon cyan">
+                            🤖
+                        </div>
+
+                        <div>
+                            <span class="stat-label">Bot Status</span>
+                            <h2 id="topBotStatus" class="running">RUNNING</h2>
+                            <span class="stat-small">System Active</span>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- MARKET AREA -->
+                <section id="marketsSection" class="market-area">
+
+                    <div class="chart-panel">
+
+                        <div class="panel-header">
+
+                            <div class="panel-title">
+
+                                <div class="panel-icon">
+                                    ↗
+                                </div>
+
+                                <div>
+                                    <h2>Market Chart</h2>
+                                    <span>BTC/USD price movement</span>
+                                </div>
+
+                            </div>
+
+                            <div class="chart-controls">
+
+                                <span class="pair-badge">
+                                    BTC/USD
+                                </span>
+
+                                <span class="live-badge">
+                                    <i></i>
+                                    LIVE
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="chart-wrapper">
+
+                            <div class="chart-y-labels">
+                                <span>62,000</span>
+                                <span>61,000</span>
+                                <span>60,000</span>
+                                <span>59,000</span>
+                                <span>58,000</span>
+                            </div>
+
+                            <canvas id="marketChart"></canvas>
+
+                        </div>
+
+
+                        <div class="chart-footer">
+                            <span>12:00</span>
+                            <span>16:00</span>
+                            <span>20:00</span>
+                            <span>00:00</span>
+                            <span>04:00</span>
+                            <span>08:00</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="side-panels">
+
+                        <div class="side-card">
+
+                            <div class="side-card-header">
+                                <div class="side-icon purple">◉</div>
+                                <span>Trading Signal</span>
+                            </div>
+
+                            <h3 id="sideSignal" class="signal hold">
+                                HOLD
+                            </h3>
+
+                            <p id="signalDescription">
+                                Market is in consolidation. Waiting for a clearer breakout or bounce.
+                            </p>
+
+                        </div>
+
+
+                        <div class="side-card">
+
+                            <div class="side-card-header">
+                                <div class="side-icon green">↗</div>
+                                <span>Profit / Loss</span>
+                            </div>
+
+                            <h3 id="sideProfitLoss" class="loss">
+                                -$12.89
+                            </h3>
+
+                            <p>
+                                Active position (unrealized)
+                            </p>
+
+                        </div>
+
+
+                        <div class="side-card compact-card">
+
+                            <div class="mini-stat">
+                                <span>Market Trend</span>
+                                <strong id="marketTrend">NEUTRAL</strong>
+                            </div>
+
+                            <div class="mini-stat">
+                                <span>Risk Level</span>
+                                <strong id="riskLevel">LOW</strong>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- BOT STATUS -->
+                <section class="bot-status-panel">
+
+                    <div class="bot-status-left">
+
+                        <div class="large-bot-icon">
+                            🤖
+                        </div>
+
+                        <div>
+
+                            <h3>Bot Status</h3>
+
+                            <p>
+                                Trading bot is active and monitoring the demo market continuously.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="running-badge" id="botBadge">
+                        <span></span>
+                        RUNNING
+                    </div>
+
+                </section>
+
+
+                <!-- AI -->
+                <section id="aiSection" class="ai-panel">
+
+                    <div class="ai-left">
+
+                        <div class="ai-icon">
+                            ✦
+                        </div>
+
+                        <div>
+
+                            <h2>AI Assistant</h2>
+
+                            <p>
+                                Get AI-powered market analysis and trading insights.
+                            </p>
+
+                            <button id="analyzeBtn" type="button">
+                                ✦ Analyze Market
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="ai-divider"></div>
+
+
+                    <div class="ai-analysis">
+
+                        <div class="analysis-title">
+                            <span>✦</span>
+                            <h3>Market Analysis</h3>
+                        </div>
+
+                        <p id="aiResponse">
+                            Click the button to get the latest AI analysis on BTC/USD market conditions, trends and trading signals.
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+                <!-- INDICATORS -->
+                <section class="indicators-section">
+
+                    <div class="section-heading">
+
+                        <div>
+                            <h2>Technical Indicators</h2>
+                            <p>Current demo market indicators</p>
+                        </div>
+
+                        <span class="indicator-live">
+                            LIVE DATA
+                        </span>
+
+                    </div>
+
+
+                    <div class="indicator-grid">
+
+                        <div class="indicator-card">
+                            <div class="indicator-top">
+                                <span>RSI</span>
+                                <span class="indicator-icon">RSI</span>
+                            </div>
+                            <h3 id="rsiValue">52.4</h3>
+                            <p id="rsiStatus">Neutral</p>
+                        </div>
+
+
+                        <div class="indicator-card">
+                            <div class="indicator-top">
+                                <span>MACD</span>
+                                <span class="indicator-icon">MACD</span>
+                            </div>
+                            <h3 id="macdValue">+0.18</h3>
+                            <p id="macdStatus">Bullish</p>
+                        </div>
+
+
+                        <div class="indicator-card">
+                            <div class="indicator-top">
+                                <span>EMA</span>
+                                <span class="indicator-icon">EMA</span>
+                            </div>
+                            <h3 id="emaValue">$59,850</h3>
+                            <p id="emaStatus">Price Above EMA</p>
+                        </div>
+
+
+                        <div class="indicator-card">
+                            <div class="indicator-top">
+                                <span>Volatility</span>
+                                <span class="indicator-icon">VOL</span>
+                            </div>
+                            <h3 id="volatilityValue">2.4%</h3>
+                            <p id="volatilityStatus">Medium</p>
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </section>
+
+
+            <!-- =====================================================
+                 MARKETS
+            ====================================================== -->
+
+            <section id="marketsListSection" class="page-section">
+
+                <div class="section-header">
+
+                    <div>
+                        <h2>Markets</h2>
+                        <p>Track available demo crypto pairs</p>
+                    </div>
+
+                    <span class="history-badge">MARKET</span>
+
+                </div>
+
+
+                <div class="market-grid" id="marketGrid"></div>
+
+            </section>
+
+
+            <!-- =====================================================
+                 PORTFOLIO
+            ====================================================== -->
+
+            <section id="portfolioSection" class="page-section">
+
+                <div class="section-header">
+
+                    <div>
+                        <h2>Portfolio</h2>
+                        <p>Overview of your demo trading account</p>
+                    </div>
+
+                    <span class="live-badge">DEMO</span>
+
+                </div>
+
+
+                <div class="portfolio-grid">
+
+                    <div class="portfolio-card">
+                        <span>Total Balance</span>
+                        <h3 id="totalBalance">$100,000.00</h3>
+                    </div>
+
+                    <div class="portfolio-card">
+                        <span>Available Balance</span>
+                        <h3 id="availableBalance">$40,180.00</h3>
+                    </div>
+
+                    <div class="portfolio-card">
+                        <span>Invested</span>
+                        <h3 id="investedBalance">$59,820.00</h3>
+                    </div>
+
+                    <div class="portfolio-card">
+                        <span>Total P/L</span>
+                        <h3 id="portfolioPL" class="profit">+$0.00</h3>
+                    </div>
+
+                </div>
+
+
+                <div class="portfolio-summary">
+
+                    <div>
+                        <span>Active Positions</span>
+                        <strong id="activeTradeCount">1</strong>
+                    </div>
+
+                    <div>
+                        <span>Completed Trades</span>
+                        <strong id="historyTradeCount">2</strong>
+                    </div>
+
+                    <div>
+                        <span>Win Rate</span>
+                        <strong id="winRate">50%</strong>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =====================================================
+                 BUY / SELL
+            ====================================================== -->
+
+            <section id="tradeSection" class="page-section">
+
+                <div class="section-header">
+
+                    <div>
+                        <h2>Buy / Sell Demo Trade</h2>
+                        <p>Practice trading using demo funds</p>
+                    </div>
+
+                    <span class="history-badge">PAPER MODE</span>
+
+                </div>
+
+
+                <div class="trade-form-card">
+
+                    <div class="trade-input-group">
+
+                        <label>Asset</label>
+
+                        <select id="tradeAsset">
+                            <option value="BTC/USD">BTC/USD</option>
+                            <option value="ETH/USD">ETH/USD</option>
+                            <option value="SOL/USD">SOL/USD</option>
+                            <option value="XRP/USD">XRP/USD</option>
+                        </select>
+
+                    </div>
+
+
+                    <div class="trade-input-group">
+
+                        <label>Trade Type</label>
+
+                        <div class="buy-sell-toggle">
+
+                            <button
+                                type="button"
+                                id="buyBtn"
+                                class="trade-type-btn buy-selected"
+                            >
+                                BUY
+                            </button>
+
+                            <button
+                                type="button"
+                                id="sellBtn"
+                                class="trade-type-btn"
+                            >
+                                SELL
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="trade-input-group">
+
+                        <label>Quantity</label>
+
+                        <input
+                            type="number"
+                            id="tradeQuantity"
+                            min="0.001"
+                            step="0.001"
+                            value="0.05"
+                        >
+
+                    </div>
+
+
+                    <div class="trade-preview">
+
+                        <div>
+                            <span>Current Price</span>
+                            <strong id="tradeCurrentPrice">$60,017.65</strong>
+                        </div>
+
+                        <div>
+                            <span>Estimated Amount</span>
+                            <strong id="tradeEstimatedAmount">$3,000.88</strong>
+                        </div>
+
+                    </div>
+
+
+                    <button id="placeTradeBtn" class="primary-action">
+                        Place Demo Trade
+                    </button>
+
+                    <p id="tradeMessage" class="form-message"></p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =====================================================
+                 ACTIVE TRADES
+            ====================================================== -->
+
+            <section id="activeSection" class="trades-section page-section">
+
+                <div class="section-header">
+
+                    <div>
+                        <h2>Active Trades</h2>
+                        <p>Currently running demo positions</p>
+                    </div>
+
+                    <span class="live-badge">ACTIVE</span>
+
+                </div>
+
+
+                <div class="trades-table-wrapper">
+
+                    <table class="trades-table">
+
+                        <thead>
+                            <tr>
+                                <th>Asset</th>
+                                <th>Type</th>
+                                <th>Entry Price</th>
+                                <th>Current Price</th>
+                                <th>Qty</th>
+                                <th>P/L</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="activeTradesBody"></tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- =====================================================
+                 TRADE HISTORY
+            ====================================================== -->
+
+            <section id="historySection" class="trades-section page-section">
+
+                <div class="section-header">
+
+                    <div>
+                        <h2>Trade History</h2>
+                        <p>Completed demo trading activity</p>
+                    </div>
+
+                    <span class="history-badge">HISTORY</span>
+
+                </div>
+
+
+                <div class="trades-table-wrapper">
+
+                    <table class="trades-table">
+
+                        <thead>
+                            <tr>
+                                <th>Asset</th>
+                                <th>Type</th>
+                                <th>Entry Price</th>
+                                <th>Exit Price</th>
+                                <th>Qty</th>
+                                <th>P/L</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tradeHistoryBody"></tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- =====================================================
+                 WATCHLIST
+            ====================================================== -->
+
+            <section id="watchlistSection" class="page-section">
+
+                <div class="section-header">
+
+                    <div>
+                        <h2>Watchlist</h2>
+                        <p>Keep an eye on selected crypto pairs</p>
+                    </div>
+
+                    <span class="history-badge">WATCHLIST</span>
+
+                </div>
+
+
+                <div class="watchlist-add">
+
+                    <select id="watchAsset">
+                        <option value="BTC/USD">BTC/USD</option>
+                        <option value="ETH/USD">ETH/USD</option>
+                        <option value="SOL/USD">SOL/USD</option>
+                        <option value="XRP/USD">XRP/USD</option>
+                    </select>
+
+                    <button id="addWatchBtn" class="primary-action small-action">
+                        + Add to Watchlist
+                    </button>
+
+                </div>
+
+
+                <div id="watchlistGrid" class="watchlist-grid"></div>
+
+            </section>
+
+
+            <!-- =====================================================
+                 NOTIFICATIONS
+            ====================================================== -->
+
+            <section id="notificationsSection" class="page-section">
+
+                <div class="section-header">
+
+                    <div>
+                        <h2>Notifications</h2>
+                        <p>Recent bot and trading activity</p>
+                    </div>
+
+                    <span class="live-badge">LIVE</span>
+
+                </div>
+
+
+                <div id="notificationList" class="notification-list"></div>
+
+            </section>
+
+
+            <!-- =====================================================
+                 SETTINGS
+            ====================================================== -->
+
+            <section id="settingsSection" class="page-section">
+
+                <div class="section-header">
+
+                    <div>
+                        <h2>Settings</h2>
+                        <p>Manage demo bot preferences</p>
+                    </div>
+
+                    <span class="history-badge">SETTINGS</span>
+
+                </div>
+
+
+                <div class="settings-card">
+
+                    <div class="setting-row">
+
+                        <div>
+                            <strong>Trading Bot</strong>
+                            <span>Enable or disable demo bot monitoring</span>
+                        </div>
+
+                        <label class="switch">
+                            <input type="checkbox" id="botToggle" checked>
+                            <span class="slider"></span>
+                        </label>
+
+                    </div>
+
+
+                    <div class="setting-row">
+
+                        <div>
+                            <strong>Notifications</strong>
+                            <span>Show trade and market notifications</span>
+                        </div>
+
+                        <label class="switch">
+                            <input type="checkbox" id="notificationToggle" checked>
+                            <span class="slider"></span>
+                        </label>
+
+                    </div>
+
+
+                    <div class="setting-row">
+
+                        <div>
+                            <strong>Reset Demo Data</strong>
+                            <span>Restore initial demo account state</span>
+                        </div>
+
+                        <button id="resetDemoBtn" class="danger-btn">
+                            Reset Demo
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =====================================================
+                 PROFILE
+            ====================================================== -->
+
+            <section id="profileSection" class="page-section">
+
+                <div class="section-header">
+
+                    <div>
+                        <h2>Profile</h2>
+                        <p>Your demo account information</p>
+                    </div>
+
+                    <span class="live-badge">ACCOUNT</span>
+
+                </div>
+
+
+                <div class="profile-card">
+
+                    <div class="profile-avatar" id="profileAvatar">
+                        U
+                    </div>
+
+                    <div class="profile-details">
+
+                        <h3 id="profileName">User</h3>
+                        <p id="profileEmail">user@email.com</p>
+
+                        <span class="demo-account-badge">
+                            DEMO ACCOUNT
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <footer class="footer">
+                Crypto Trading Bot • AI-powered demo trading dashboard
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <script src="script.js"></script>
+    <script src="feature.js"></script>
+
+</body>
+
+</html>
